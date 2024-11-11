@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+
+{%block styles%}
+<style>
+    .del{
+        color: red;
+    }
+</style>
+{%endblock%}
+
+{%block main%}
+    
+    <div class="container mt-3">
+        <div class="col-8">
+            {%for flower in flowers%}
+            <div class="row">
+                <a class="col" href="/flower?id={{flower.id}}">{{flower.name}}{{flower.getStatus()}}</a>
+                <a class="col-3 del" href="/deleteFlower?id={{flower.id}}&silance=True">Удалить</a>
+                <div class="col for_computer"></div>
+            </div>
+            
+            {%endfor%}
+            <div class="row mt-2 mb-3">
+                <div class="col-6">
+                    <b><a class="mt-3" href="/newFlower">Создать новый ↵</a></b>
+                    <a class="mt-3" href="/info">Справка ↵</a>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
+        
+    
+
+    
+{%endblock%}

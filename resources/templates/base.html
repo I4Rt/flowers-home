@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>🌱FLOWERS</title>
+        <link href="/css/bootstrap.min.css"  rel="stylesheet" />
+        <!-- <link rel="shortcut icon" size='72x72' href="img/ico-72.png" />
+        <link rel="shortcut icon" size='96x96' href="img/ico-96.png" /> -->
+        <link rel="shortcut icon" sizes="192x192" href="img/ico-192.png" />
+        <link rel="apple-touch-icon" sizes="192x192" href="img/ico-192.png" />
+        <!-- <link rel="apple-touch-icon" sizes='72x72' href="img/ico-72.png" /> -->
+        {%block links%}
+        {%endblock%}
+    </head>
+    <style>
+        body{
+            background-color: rgb(213 226 179);
+        }
+        a{
+            color:rgb(69, 50, 23);
+        }
+
+        @media screen and (max-width: 540px) {
+            .for_computer {
+                display:none;
+            }
+        }
+    </style>
+    {%block styles%}
+    {%endblock%}
+    <body>
+        {%block main%}
+        {%endblock%}
+    </body>
+    {%block scripts%}
+    {%endblock%}
+    <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/canvasjs.min.js"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+</html>
+

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shades</title>
+    <meta name="viewport" content="width=device-width, height=device-height">
+</head>
+
+<style>
+
+    @font-face {
+        font-family: "Typometry Regular";
+        src: local('Typometry Regular'),
+        url("fonts/Typometry_Alternate.ttf") format("opentype");
+    }
+
+
+    body{
+        background-color: lightgray;
+        padding: 0px;
+
+    }
+
+    .correct, .incorrect{
+        opacity: 1;
+        background-color: rgb(102, 255, 0);
+        position: absolute;
+        height:100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+
+        transition: all ease-in 0.1s;
+    }
+    .incorrect{
+        background-color: red;
+    }
+
+    .hidden{
+        opacity: 0;
+        transition: all ease-out 0.1s;
+    }
+    .closed{
+        display: none;
+    }
+
+    .center{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin-left: 16px;
+        transform: translate(-50%, -50%);
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main>div{
+        margin-bottom: 16px;
+    }
+
+    .row{
+        display: flex;
+        flex-direction: row;
+    }
+    .center, .main, .row{
+        max-width: min-content;
+    }
+    .item{
+        width: 42px;
+        height: 42px;
+        border-radius: 5px;
+
+        margin-left: 16px;
+        margin-right: 16px;
+
+        background-color: rgb(55, 87, 134);
+        cursor: pointer;
+    }
+    .different{
+        background-color: rgb(63, 99, 152);
+    }
+
+    text{
+        font-family: Arial;
+        font-size: 16px;
+    }
+    .loose{
+        font-family: Arial;
+        font-weight: bold;
+        font-size: 48px;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .info, .logo{
+        position: absolute;
+        top: 80%;
+        width: 100%;
+        text-align: center;
+
+    }
+    .logo{
+        font-family: "Typometry Regular";
+        top: 10%;
+        font-size: 72px;
+        color: darkgoldenrod;
+    }
+    .unclickable{
+        pointer-events: none;
+    }
+
+    @media (max-width: 800px) {
+        .item{
+            height: 36px;
+            width: 36px;
+
+
+            margin-left: 12px;
+            margin-right: 12px;
+
+        }
+        .main>div{
+            margin-bottom: 12px;
+        }
+        .center{
+            width: 300px;
+
+            margin-left: 0px;
+        }
+        .info{
+            margin-left: -12px;
+        }
+
+        .logo{
+            margin-left: -16px;
+            font-size: 72px;
+        }
+        text{
+            font-size: 18px;
+        }
+        .loose{
+            font-size: 24px;
+        }
+
+    }
+</style>
+<body>
+
+    <div class="incorrect hidden"></div>
+    <div class="correct hidden"></div>
+    <text class="logo">shades</text>
+    <text class="info"> Ваша серия <b class="counter">0</b></text>
+
+    <div class="center">
+        <div class="main">
+            <!--
+            <div class="row">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item different"></div>
+                <div class="item"></div>
+            </div>
+            <div class="row">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+            <div class="row">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+            <div class="row">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+            <div class="row">
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
+            </div>
+            -->
+        </div>
+
+        <text class="loose hidden">Вы проиграли :(</text>
+    </div>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+<script>
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+    function generate_color(){
+        var red = getRandomInt(256);
+        var green = getRandomInt(256);
+        var blue = getRandomInt(256);
+        var mult = getRandomInt(2);
+        if(mult == 0){
+            mult = -1
+        }
+        var default_color = `rgb(${red},${green},${blue})`;
+        var different_color = `rgb(${Math.abs(red + (-1 * mult)*12)},${Math.abs(green + (-1 * mult)*12)},${Math.abs(blue + (-1 * mult)*12)})`
+        $(".item").css("background-color", default_color);
+        $(".different").css("background-color", different_color);
+    }
+    function generate_different_row(){
+        var different = getRandomInt(5);
+        var result = "<div class=\"row\">";
+
+        for(var i = 0; i < 5; i++){
+            if(i == different){
+                result += "<div class=\"item different\"></div>";
+            }
+            else{
+                result += "<div class=\"item\"></div>";
+            }
+        }
+
+        result += "</div>";
+
+
+        return result;
+    }
+    function generate_row(){
+        var result = "<div class=\"row\">";
+
+        for(var i = 0; i < 5; i++){
+            result += "<div class=\"item\"></div>";
+        }
+
+        result += "</div>";
+
+
+        return result;
+    }
+
+    function generate_main(){
+        var different = getRandomInt(5);
+        var result = "";
+
+        for(var i = 0; i < 5; i++){
+            if(i == different){
+                result += generate_different_row();
+            }
+            else{
+                result += generate_row();
+            }
+        }
+
+
+        return result;
+    }
+
+    var max_series = 0
+    var miss_points = 0
+    function main_thread() {
+        $(".main").html(generate_main());
+        generate_color();
+        $(".item").click(function () {
+            console.log("clicked");
+
+            if (this.classList.contains("different")) {
+                $(".correct").toggleClass("hidden");
+                setTimeout(() => {
+                    $(".correct").toggleClass("hidden");
+                }, 200);
+                max_series += 1;
+                miss_points = 0;
+                main_thread();
+            } else {
+                $(this).addClass("unclickable");
+                $(this).addClass("hidden");
+                $(".incorrect").toggleClass("hidden");
+                setTimeout(() => {
+                    $(".incorrect").toggleClass("hidden");
+                }, 200);
+                miss_points += 1;
+                if (miss_points > 2) {
+                    $(".main").addClass("closed");
+                    setTimeout(() => {
+                        $(".loose").toggleClass("hidden");
+                    }, 200);
+
+                    (function (x) {
+                        $(x).click(function () {
+                            window.location.reload();
+                        });
+                    })(".loose");
+
+
+                }
+            }
+            $(".counter").html(max_series);
+        });
+    }
+    $(document).ready(main_thread());
+
+</script>
+</html>
